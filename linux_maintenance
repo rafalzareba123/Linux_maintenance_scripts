@@ -53,39 +53,39 @@ case $choice in
 		countdown Applications\ upgrade 5
 		sudo apt-get update; sudo apt-get upgrade -y
 		if [ $? -eq 0 ]
-        then echo -e "\n\nApplications upgrade procedure: OK"
-        else echo -e "\n\nError during the procces: $? "
-        fi
+        	then echo -e "\n\nApplications upgrade procedure: OK"
+        	else echo -e "\n\nError during the procces: $? "
+        	fi
 		read -p "Press ENTER to continue...";;
 
 	"3")
 		countdown System\ Paths 5
 		sudo apt-get dist-upgrade -y	
 		if [ $? -eq 0 ]
-        then echo -e "\n\nSystem paths upgrade procedure: OK"
-        else echo -e "\n\nError during the procces: $? "
-        fi
+        	then echo -e "\n\nSystem paths upgrade procedure: OK"
+        	else echo -e "\n\nError during the procces: $? "
+        	fi
 		read -p "Press ENTER to continue...";;
 	"4")
 		countdown Full\ System\ Maintenance 5
 		sudo apt-get update; sudo apt-get upgrade -y; sudo apt-get dist-upgrade -y;
 		sudo updatedb; sudo apt-get autoremove; sudo apt-get autoclean
 		if [ $? -eq 0 ]
-        then
-        	countdown Reboot 10
+        	then
+			countdown Reboot 10
 			sudo reboot
-        else echo -e "\n\nError during the procces: $? "
-        fi;;
+        	else echo -e "\n\nError during the procces: $? "
+        	fi;;
 	"5")
 		countdown Full\ System\ Maintenance 5
-        sudo apt-get update; sudo apt-get upgrade -y; sudo apt-get dist-upgrade -y;
-        sudo updatedb; sudo apt-get autoremove; sudo apt-get autoclean
-        if [ $? -eq 0 ]
-        then
-        	countdown Shutdown 10
-            sudo shutdown -h now
+        	sudo apt-get update; sudo apt-get upgrade -y; sudo apt-get dist-upgrade -y;
+        	sudo updatedb; sudo apt-get autoremove; sudo apt-get autoclean
+        	if [ $? -eq 0 ]
+        	then
+        		countdown Shutdown 10
+            		sudo shutdown -h now
 		else echo -e "\n\nError during the procces: $? "
-        fi;;
+        	fi;;
 
 	"6")
 		clear
