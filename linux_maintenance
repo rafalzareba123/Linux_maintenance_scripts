@@ -1,0 +1,99 @@
+#!/bin/bash
+
+# Author: Rafał Zaręba
+#
+# Script that do all nesessary updates and upgrades in linux system
+
+function print_menu(){
+	# function that prints the manager menu
+	clear
+
+	echo -e "--------------LINUX SYSTEM MAINTENANCE MANAGER---------\n\n"
+	echo "Choose what would you like to do: "
+	echo "1. System cleaning"
+	echo "2. Upgrade of all applications"
+	echo "3. Upgrade system paths"
+	echo "4. Full maintance + reboot the computer"
+	echo "5. Full maintance + turn off the computer"
+	echo "6. Exit" 
+}
+
+function countdown(){
+	# function prints out the countdown
+	for((i=$2;i>0;i--))
+	do
+		clear
+		echo "$1 process starts in $i seconds... To cancel press Ctrl+Z"
+		sleep 1
+	done
+}
+
+
+# Looping until the user choose option number 6 (exit)
+until [ choice -eq 6 ]
+do
+print_menu
+
+# Read the choice
+read choice
+
+# Case statement to run correct option
+# In each case check for erros, if there are any, print them on the screen
+case $choice in
+	"1")
+		countdown System\ cleaning 5
+		sudo apt-get autoremove; sudo apt-get autoclean
+		if [ $? -eq 0 ]
+		then echo -e "\n\nCleaning procedure: OK"
+		else echo -e "\n\nError during the procces: $? "
+		fi
+		read -p "Press ENTER to continue...";;
+
+	"2")
+		countdown Applications\ upgrade 5
+		sudo apt-get update; sudo apt-get upgrade -y
+		if [ $? -eq 0 ]
+        then echo -e "\n\nApplications upgrade procedure: OK"
+        else echo -e "\n\nError during the procces: $? "
+        fi
+		read -p "Press ENTER to continue...";;
+
+	"3")
+		countdown System\ Paths 5
+		sudo apt-get dist-upgrade -y	
+		if [ $? -eq 0 ]
+        then echo -e "\n\nSystem paths upgrade procedure: OK"
+        else echo -e "\n\nError during the procces: $? "
+        fi
+		read -p "Press ENTER to continue...";;
+	"4")
+		countdown Full\ System\ Maintenance 5
+		sudo apt-get update; sudo apt-get upgrade -y; sudo apt-get dist-upgrade -y;
+		sudo updatedb; sudo apt-get autoremove; sudo apt-get autoclean
+		if [ $? -eq 0 ]
+        then
+        	countdown Reboot 10
+			sudo reboot
+        else echo -e "\n\nError during the procces: $? "
+        fi;;
+	"5")
+		countdown Full\ System\ Maintenance 5
+        sudo apt-get update; sudo apt-get upgrade -y; sudo apt-get dist-upgrade -y;
+        sudo updatedb; sudo apt-get autoremove; sudo apt-get autoclean
+        if [ $? -eq 0 ]
+        then
+        	countdown Shutdown 10
+            sudo shutdown -h now
+		else echo -e "\n\nError during the procces: $? "
+        fi;;
+
+	"6")
+		clear
+		exit;;
+	* )
+	 	echo "No such a option in menu, Try 1-6"
+		read -p "Press ENTER to continue...";;
+
+
+esac
+done
