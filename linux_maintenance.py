@@ -33,7 +33,7 @@ def countdown(process, seconds):
     for i in range(seconds, 0, -1):
         os.system('clear')
         print('{} process starts in {} seconds...'
-              'To cancel press Ctrl+Z '.format(process, i))
+              'To cancel press Ctrl+C '.format(process, i))
         time.sleep(1)
 
 
