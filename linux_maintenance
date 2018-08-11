@@ -23,7 +23,7 @@ function countdown(){
 	for((i=$2;i>0;i--))
 	do
 		clear
-		echo "$1 process starts in $i seconds... To cancel press Ctrl+Z"
+		echo "$1 process starts in $i seconds... To cancel press Ctrl+C"
 		sleep 1
 	done
 }
